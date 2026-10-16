@@ -469,7 +469,7 @@ class ConfigurationFragment : ToolbarFragment(R.layout.layout_group_list),
             val popup = PopupMenu(anchor.context, anchor)
             fun item(@StringRes title: Int, byCount: Boolean, descending: Boolean) {
                 popup.menu.add(title).setOnMenuItemClickListener {
-                    GroupActions.sortGroups(this, byCount, descending)
+                    GroupActions.sortGroups(byCount, descending)
                     true
                 }
             }

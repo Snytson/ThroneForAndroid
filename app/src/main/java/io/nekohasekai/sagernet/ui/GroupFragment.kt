@@ -32,6 +32,7 @@ import io.nekohasekai.sagernet.ktx.runOnDefaultDispatcher
 import io.nekohasekai.sagernet.ktx.showAllowingStateLoss
 import io.nekohasekai.sagernet.ktx.snackbar
 import io.nekohasekai.sagernet.ktx.startFilesForResult
+import io.nekohasekai.sagernet.ui.profiles.GroupActions
 import io.nekohasekai.sagernet.ui.profiles.SubscriptionInfoCard
 import io.nekohasekai.sagernet.widget.applyListInsets
 import io.nekohasekai.sagernet.widget.QRCodeDialog
@@ -121,6 +122,12 @@ class GroupFragment : ToolbarFragment(R.layout.layout_group), Toolbar.OnMenuItem
             R.id.action_update_all -> requireContext().confirmAction(
                 getString(R.string.grp_update_all_confirm), null, R.string.group_update,
             ) { runOnDefaultDispatcher { SubscriptionClient.refreshAll(false) } }
+
+            // The list's sort, same as the profiles tab row's: the Default group stays the first row.
+            R.id.action_sort_groups_count_desc -> GroupActions.sortGroups(byCount = true, descending = true)
+            R.id.action_sort_groups_count_asc -> GroupActions.sortGroups(byCount = true, descending = false)
+            R.id.action_sort_groups_name_asc -> GroupActions.sortGroups(byCount = false, descending = false)
+            R.id.action_sort_groups_name_desc -> GroupActions.sortGroups(byCount = false, descending = true)
         }
         return true
     }

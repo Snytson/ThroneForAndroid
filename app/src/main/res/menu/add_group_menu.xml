@@ -7,6 +7,24 @@
         android:title="@string/update_all_subscription"
         app:showAsAction="always" />
     <item
+        android:id="@+id/action_sort_groups"
+        android:title="@string/profiles_sort_group">
+        <menu>
+            <item
+                android:id="@+id/action_sort_groups_count_desc"
+                android:title="@string/profiles_sort_group_count_desc" />
+            <item
+                android:id="@+id/action_sort_groups_count_asc"
+                android:title="@string/profiles_sort_group_count_asc" />
+            <item
+                android:id="@+id/action_sort_groups_name_asc"
+                android:title="@string/profiles_sort_group_name_asc" />
+            <item
+                android:id="@+id/action_sort_groups_name_desc"
+                android:title="@string/profiles_sort_group_name_desc" />
+        </menu>
+    </item>
+    <item
         android:id="@+id/action_new_group"
         android:icon="@drawable/ic_av_playlist_add"
         android:title="@string/grp_new_group"

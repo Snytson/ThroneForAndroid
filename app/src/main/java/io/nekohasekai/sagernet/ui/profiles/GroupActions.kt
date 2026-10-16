@@ -18,6 +18,7 @@ import io.nekohasekai.sagernet.ktx.Logs
 import io.nekohasekai.sagernet.ktx.confirmAction
 import io.nekohasekai.sagernet.ktx.nameList
 import io.nekohasekai.sagernet.ktx.readableMessage
+import io.nekohasekai.sagernet.ktx.runOnDefaultDispatcher
 import io.nekohasekai.sagernet.ktx.snackbar
 import io.nekohasekai.sagernet.ui.ConfigurationFragment
 import io.nekohasekai.sagernet.ui.MainActivity
@@ -199,10 +200,10 @@ internal object GroupActions {
     /**
      * SetGroupsTabOrder by node count ([byCount]) or display name, ascending or [descending]. The Default group (the
      * non-subscription group carrying the default name) stays the first tab and does not take part; the rest sort
-     * stably, so equal keys keep their relative order. Reads the database: call it off the main thread.
+     * stably, so equal keys keep their relative order. Reads the database: runs off the main thread.
      */
-    fun sortGroups(host: ConfigurationFragment, byCount: Boolean, descending: Boolean) {
-        host.launchIo {
+    fun sortGroups(byCount: Boolean, descending: Boolean) {
+        runOnDefaultDispatcher {
             val groups = GroupRepo.all()
             val pinned = groups.firstOrNull { !it.isSubscription && it.name == SagerDatabase.defaultGroupName() }
             val rest = groups.filter { it !== pinned }
