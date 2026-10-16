@@ -9,6 +9,14 @@
 > 
 > Disclaimer: This project is intended solely for technical research and code learning purposes and does not provide any form of network proxy service. Please do not use this project for any activities that violate local laws and regulations. Do not use this project in production environments. Users are fully responsible for any risks that may arise from using this project. If you download or reference this project, please delete all related content within 24 hours and avoid long-term storage, distribution, or dissemination of any part of this project. **The author reserves the right to modify, update, or remove any part of this project or its contents at any time without prior notice.**
 
+## 改动说明 / Changes
+
+> 本仓库 fork 自 [throneproj/ThroneForAndroid](https://github.com/throneproj/ThroneForAndroid)，感谢上游项目的付出。以下为本仓库的改动记录（新改动追加在后）。
+> This repository is forked from [throneproj/ThroneForAndroid](https://github.com/throneproj/ThroneForAndroid); thanks to the upstream project. The list below records this fork's changes (newest entries appended at the end).
+
+- 2.0.2 (2026-10-16): 右上角菜单新增分组排序（按节点数量） / More options menu: new group sort by node count
+- 2.0.3 (2026-10-16): 分组排序入口移到分组标签栏，支持按节点数量/名称正序倒序，默认分组固定第一不参与排序；版本号升级 2.0.3 / Group sort moved into the group tab row: sort by node count or name, ascending or descending, with the default group pinned first and excluded from sorting; version bumped to 2.0.3
+
 ## 下载 / Downloads
 
 [![GitHub All Releases](https://img.shields.io/github/downloads/throneproj/ThroneForAndroid/total?label=downloads-total&logo=github&style=flat-square)](https://github.com/throneproj/ThroneForAndroid/releases)
