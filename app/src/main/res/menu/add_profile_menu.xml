@@ -237,15 +237,6 @@
                         </menu>
                     </item>
                     <item
-                        android:id="@+id/action_sort_group"
-                        android:title="@string/profiles_sort_group">
-                        <menu>
-                            <item
-                                android:id="@+id/action_sort_group_count"
-                                android:title="@string/profiles_sort_group_count" />
-                        </menu>
-                    </item>
-                    <item
                         android:id="@+id/action_show"
                         android:title="@string/profiles_show">
                         <menu>

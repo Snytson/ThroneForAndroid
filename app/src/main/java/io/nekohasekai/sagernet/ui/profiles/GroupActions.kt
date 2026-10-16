@@ -197,14 +197,26 @@ internal object GroupActions {
     }
 
     /**
-     * SetGroupsTabOrder by each group's member count: the tabs reorder by node count, equal counts keep their
-     * relative order (a stable sort). Reads the database: call it off the main thread.
+     * SetGroupsTabOrder by node count ([byCount]) or display name, ascending or [descending]. The Default group (the
+     * non-subscription group carrying the default name) stays the first tab and does not take part; the rest sort
+     * stably, so equal keys keep their relative order. Reads the database: call it off the main thread.
      */
-    fun sortGroupsByCount(host: ConfigurationFragment, descending: Boolean) {
+    fun sortGroups(host: ConfigurationFragment, byCount: Boolean, descending: Boolean) {
         host.launchIo {
-            val counts = GroupRepo.ids().associateWith { SagerDatabase.proxyDao.countByGroup(it) }
-            val ordered = counts.keys.sortedBy { counts[it] }
-            GroupRepo.setDisplayOrder(if (descending) ordered.asReversed() else ordered)
+            val groups = GroupRepo.all()
+            val pinned = groups.firstOrNull { !it.isSubscription && it.name == SagerDatabase.defaultGroupName() }
+            val rest = groups.filter { it !== pinned }
+            val ordered = when {
+                byCount -> {
+                    val counts = rest.associate { it.id to SagerDatabase.proxyDao.countByGroup(it.id) }
+                    rest.sortedBy { counts.getValue(it.id) }
+                }
+                else -> {
+                    val collator = java.text.Collator.getInstance()
+                    rest.sortedWith(compareBy(collator) { it.displayName() })
+                }
+            }
+            GroupRepo.setDisplayOrder((listOfNotNull(pinned) + if (descending) ordered.asReversed() else ordered).map { it.id })
         }
     }
 

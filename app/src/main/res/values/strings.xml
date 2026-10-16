@@ -1110,7 +1110,10 @@
     <string name="profiles_sort_latency">Latency</string>
     <string name="profiles_sort_download">Download speed</string>
     <string name="profiles_sort_group">Sort groups</string>
-    <string name="profiles_sort_group_count">Node count</string>
+    <string name="profiles_sort_group_count_asc">Node count, low to high</string>
+    <string name="profiles_sort_group_count_desc">Node count, high to low</string>
+    <string name="profiles_sort_group_name_asc">Name, A to Z</string>
+    <string name="profiles_sort_group_name_desc">Name, Z to A</string>
     <string name="profiles_sort_upload">Upload speed</string>
     <string name="profiles_sort_ip_out">IP out</string>
     <string name="profiles_sort_traffic">Traffic</string>

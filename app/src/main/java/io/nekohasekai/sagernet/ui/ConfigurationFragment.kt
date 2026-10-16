@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -44,6 +45,7 @@ import io.nekohasekai.sagernet.ktx.dp2px
 import io.nekohasekai.sagernet.ktx.onMainDispatcher
 import io.nekohasekai.sagernet.ktx.runOnDefaultDispatcher
 import io.nekohasekai.sagernet.ktx.runOnMainDispatcher
+import io.nekohasekai.sagernet.ui.profiles.GroupActions
 import io.nekohasekai.sagernet.ui.profiles.GroupMenu
 import io.nekohasekai.sagernet.ui.profiles.ProfileImports
 import io.nekohasekai.sagernet.ui.profiles.ProfileItemMenu
@@ -135,6 +137,7 @@ class ConfigurationFragment : ToolbarFragment(R.layout.layout_group_list),
     private val imports = ProfileImports(this)
 
     private lateinit var tabLayout: TabLayout
+    private lateinit var tabRow: ViewGroup
     private lateinit var pager: ViewPager2
     private lateinit var pagerAdapter: ProfilesPagerAdapter
     private var mediator: TabLayoutMediator? = null
@@ -209,11 +212,12 @@ class ConfigurationFragment : ToolbarFragment(R.layout.layout_group_list),
 
         setUpToolbar()
         tabLayout = view.findViewById(R.id.group_tab)
+        tabRow = view.findViewById(R.id.group_tab_row)
         pager = view.findViewById(R.id.group_pager)
         groupProgress = view.findViewById(R.id.group_progress)
         runtimeStatus = view.findViewById(R.id.runtime_status)
         panelContainer = view.findViewById(R.id.test_panel_container)
-        tabLayout.applyInsetPadding(horizontal = true)
+        tabRow.applyInsetPadding(horizontal = true)
         runtimeStatus.applyInsetPadding(horizontal = true)
         // the panel keeps its content above the navigation bar, the stats bar and the FAB itself
         panelContainer.applyInsetMargin(horizontal = true)
@@ -222,7 +226,7 @@ class ConfigurationFragment : ToolbarFragment(R.layout.layout_group_list),
         infoCard = card
         val config = resources.configuration
         header = ProfilesHeader(
-            view as ViewGroup, view.findViewById(R.id.toolbar), tabLayout, runtimeStatus, card.view,
+            view as ViewGroup, view.findViewById(R.id.toolbar), tabRow, runtimeStatus, card.view,
             autoHide = config.screenHeightDp < COMPACT_HEIGHT_DP && !SagerNet.isTv,
             pinned = ::headerPinned,
             frozen = { lists.any { it.adapter.dragging } },
@@ -234,6 +238,7 @@ class ConfigurationFragment : ToolbarFragment(R.layout.layout_group_list),
         sidePanel = !select && config.screenWidthDp >= SIDE_PANEL_MIN_WINDOW_DP &&
             config.screenWidthDp > config.screenHeightDp
         if (sidePanel) setUpSidePanel(view)
+        setUpGroupSort(view.findViewById(R.id.group_sort))
 
         pagerAdapter = ProfilesPagerAdapter(this)
         pager.adapter = pagerAdapter
@@ -453,6 +458,27 @@ class ConfigurationFragment : ToolbarFragment(R.layout.layout_group_list),
         startActivity(Intent(requireContext(), GroupSettingsActivity::class.java).apply {
             putExtra(GroupSettingsActivity.EXTRA_GROUP_ID, group.id)
         })
+    }
+
+    /**
+     * The tab row's sort button: the tabs by node count or name, descending or ascending (the desktop's group sort).
+     * The Default group stays the first tab and does not take part.
+     */
+    private fun setUpGroupSort(button: View) {
+        button.setOnClickListener { anchor ->
+            val popup = PopupMenu(anchor.context, anchor)
+            fun item(@StringRes title: Int, byCount: Boolean, descending: Boolean) {
+                popup.menu.add(title).setOnMenuItemClickListener {
+                    GroupActions.sortGroups(this, byCount, descending)
+                    true
+                }
+            }
+            item(R.string.profiles_sort_group_count_desc, byCount = true, descending = true)
+            item(R.string.profiles_sort_group_count_asc, byCount = true, descending = false)
+            item(R.string.profiles_sort_group_name_asc, byCount = false, descending = false)
+            item(R.string.profiles_sort_group_name_desc, byCount = false, descending = true)
+            popup.show()
+        }
     }
 
     private fun initialGroupId(): Long = if (select && pickedGroup > 0) pickedGroup else GroupRepo.currentId()

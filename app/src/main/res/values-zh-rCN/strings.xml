@@ -963,7 +963,10 @@
     <string name="profiles_sort_descending">降序</string>
     <string name="profiles_sort_download">下载速度</string>
     <string name="profiles_sort_group">分组排序</string>
-    <string name="profiles_sort_group_count">节点数量</string>
+    <string name="profiles_sort_group_count_asc">节点数量（少到多）</string>
+    <string name="profiles_sort_group_count_desc">节点数量（多到少）</string>
+    <string name="profiles_sort_group_name_asc">名称（正序）</string>
+    <string name="profiles_sort_group_name_desc">名称（倒序）</string>
     <string name="profiles_sort_ip_out">出口 IP</string>
     <string name="profiles_sort_latency">延迟</string>
     <string name="profiles_sort_name">名称</string>
