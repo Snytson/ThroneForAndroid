@@ -1109,6 +1109,8 @@
     <string name="profiles_sort_test_result">Test result</string>
     <string name="profiles_sort_latency">Latency</string>
     <string name="profiles_sort_download">Download speed</string>
+    <string name="profiles_sort_group">Sort groups</string>
+    <string name="profiles_sort_group_count">Node count</string>
     <string name="profiles_sort_upload">Upload speed</string>
     <string name="profiles_sort_ip_out">IP out</string>
     <string name="profiles_sort_traffic">Traffic</string>

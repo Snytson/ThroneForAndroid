@@ -11,6 +11,7 @@ import io.nekohasekai.sagernet.database.GroupSortMethod
 import io.nekohasekai.sagernet.database.ProfileManager
 import io.nekohasekai.sagernet.database.ProxyEntity
 import io.nekohasekai.sagernet.database.ProxyGroup
+import io.nekohasekai.sagernet.database.SagerDatabase
 import io.nekohasekai.sagernet.database.TestShowItems
 import io.nekohasekai.sagernet.group.SubscriptionClient
 import io.nekohasekai.sagernet.ktx.Logs
@@ -192,6 +193,18 @@ internal object GroupActions {
             if (!GroupSort.sortProfiles(groupId, GroupSortAction(method, descending))) {
                 host.onUi { snackbar(R.string.profiles_sort_busy).show() }
             }
+        }
+    }
+
+    /**
+     * SetGroupsTabOrder by each group's member count: the tabs reorder by node count, equal counts keep their
+     * relative order (a stable sort). Reads the database: call it off the main thread.
+     */
+    fun sortGroupsByCount(host: ConfigurationFragment, descending: Boolean) {
+        host.launchIo {
+            val counts = GroupRepo.ids().associateWith { SagerDatabase.proxyDao.countByGroup(it) }
+            val ordered = counts.keys.sortedBy { counts[it] }
+            GroupRepo.setDisplayOrder(if (descending) ordered.asReversed() else ordered)
         }
     }
 

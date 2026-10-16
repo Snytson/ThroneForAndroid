@@ -962,6 +962,8 @@
     <string name="profiles_sort_busy">已有排序操作进行中</string>
     <string name="profiles_sort_descending">降序</string>
     <string name="profiles_sort_download">下载速度</string>
+    <string name="profiles_sort_group">分组排序</string>
+    <string name="profiles_sort_group_count">节点数量</string>
     <string name="profiles_sort_ip_out">出口 IP</string>
     <string name="profiles_sort_latency">延迟</string>
     <string name="profiles_sort_name">名称</string>

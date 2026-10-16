@@ -139,6 +139,10 @@ class GroupMenu(private val host: ConfigurationFragment) {
             R.id.action_sort_traffic_total -> sortByTraffic(id, TrafficBy.TOTAL)
             R.id.action_sort_traffic_downloaded -> sortByTraffic(id, TrafficBy.DL)
             R.id.action_sort_traffic_uploaded -> sortByTraffic(id, TrafficBy.UL)
+            R.id.action_sort_group_count -> {
+                GroupActions.sortGroupsByCount(host, sortDescending)
+                return true
+            }
             else -> return false
         }
         return true
